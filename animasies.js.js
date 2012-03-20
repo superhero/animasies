@@ -1,5 +1,5 @@
 /*
-    Animasies - jQuery plugin - Animation pack
+    Animasies - Javascript animation pack
     Copyright (C) 2011  Erik Landvall
     
     Animasies is free software: you can redistribute it and/or modify
@@ -70,8 +70,8 @@ var Animasies =
             z,
             v,
             u       = [],
-            temp    = length % h;
-        temp = length - temp;
+            temp    = length - ( length % h );
+            
         for(var n = 0, i = 0; n < temp; n += h, i++)
             x[i] = n;
         x[i] = length;
@@ -137,14 +137,14 @@ var Animasies =
             yv = [],
             r,
             i  = 0,
-            setArray = function(){
+            setArray = function()
+            {
                 t      += 0.1;
                 r       = a*Math.pow(Math.E,(d*t))*Math.cos((f*t)+Math.PI);
                 yv[i++] = Math.round(r);
             };
 
-        do
-            setArray();
+        do setArray();
         while(Math.abs(r) >= 0.005);
 
         return yv;
@@ -168,7 +168,8 @@ var Animasies =
             pull        = 0,
             aniArray    = [];
 
-        while(value < distance){
+        while(value < distance)
+        {
             t += 0.8;
             pull += 10;
             value = t*t-pull;
@@ -252,9 +253,11 @@ var Animasies =
             fv0,
             data    = [];
 
-        for(var m = 0; m < s; m++){
+        for(var m = 0; m < s; m++)
+        {
             fv0 = v0;
-            while(y >= 0){
+            while(y >= 0)
+            {
                 y  = y0 + (v0 * t) - (0.5 * g * Math.pow(t,2));
                 y  = Math.round(y);
                 v  = v0 - (g*t);
@@ -290,7 +293,8 @@ var Animasies =
             t           = 0,
             aniArray    = [];
 
-        while(value < distance){
+        while(value < distance)
+        {
             t += 0.8;
             value = t*t;
             aniArray[aniArray.length] = Math.round(value);
@@ -317,7 +321,8 @@ var Animasies =
         var value       = 0,
             aniArray    = [];
 
-        while(value < distance){
+        while(value < distance)
+        {
             value += speed;
             aniArray[aniArray.length] = Math.round(value);
         }
