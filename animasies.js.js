@@ -329,6 +329,15 @@ var Animasies =
         return aniArray;
     },
     
+    /**
+     * Half of a sinus curve, returns
+     * @type Array
+     * @return Array
+     * @static
+     * @function
+     * @param distance int The distance we wish to animate
+     * @param speed double The speed of the movement, default set to 0.1
+     */
     pie : function( distance, speed )
     {
         speed = speed || 0.1;
