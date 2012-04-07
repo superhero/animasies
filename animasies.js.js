@@ -331,6 +331,7 @@ var Animasies =
     
     /**
      * Half of a sinus curve, returns
+     * 
      * @type Array
      * @return Array
      * @static
@@ -360,7 +361,45 @@ var Animasies =
             animation.push( Math.round( value * distance ));
         }
 
-        if( animation.length > 0)
+        if( animation.length > 0 )
+            animation[ animation.length - 1 ] = distance;
+
+        return animation;
+    },
+    
+    /**
+     * A positive sinus curve
+     * 
+     * @type Array
+     * @return Array
+     * @static
+     * @function
+     * @param distance int The distance we wish to animate
+     * @param speed double The speed of the movement, default set to 0.1
+     */
+    halfMoon : function( distance, speed )
+    {
+        speed = speed || 0.1;
+
+        var animation = [],
+            former    = 0,
+            ticker    = ( Math.PI / 2 ) * - 1,
+            value;
+
+        while( true )
+        {
+            ticker += speed
+            value   = ( Math.sin( ticker ) + 1 ) / 2;
+
+            if( former >= value )
+                break;
+
+            former = value;
+
+            animation.push( Math.round( value * distance ));
+        }
+
+        if( animation.length > 0 )
             animation[ animation.length - 1 ] = distance;
 
         return animation;
