@@ -327,5 +327,33 @@ var Animasies =
             aniArray[aniArray.length] = Math.round(value);
         }
         return aniArray;
+    },
+    
+    pie : function( distance, speed )
+    {
+        speed = speed || 0.1;
+
+        var animation = [],
+            former    = 0,
+            ticker    = 0,
+            value;
+
+        while( true )
+        {
+            ticker += speed
+            value   = Math.sin( ticker );
+
+            if( former >= value )
+                break;
+
+            former = value;
+
+            animation.push( Math.round( value * distance ));
+        }
+
+        if( animation.length > 0)
+            animation[ animation.length - 1 ] = distance;
+
+        return animation;
     }
 }
