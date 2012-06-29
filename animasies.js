@@ -16,22 +16,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
  */
 
-/* Cumulativa sum
- * 
- * @param vector array The vector that the end resoult should be based upon.
- * 
- * @return Array
- */
-Math.cumsum = Math.cumsum || function( vektor )
-{
-    var cumsum  = [];
-    cumsum[ 0 ] = vektor[ 0 ];
-    for ( var i = 1; i < vektor.length; i++ )
-        cumsum[ i ] = cumsum[ i-1 ] + vektor[ i ];
-
-    return cumsum;
-}
-
 /* This class containes static funktions that can be used in animations
  * 
  * @class
@@ -57,15 +41,33 @@ var Animasies =
     {
         position = position || 0.5;
         
-        var h   = length / (( 0.053019146 * length ) + 84.09425626 ),
-            s   = length / 10,
-            j   = length * position,
-            x   = [],
-            y   = [],
-            z,
-            v,
-            u   = [],
-            tmp = length - ( length % h );
+        var
+        h   = length / (( 0.053019146 * length ) + 84.09425626 ),
+        s   = length / 10,
+        j   = length * position,
+        x   = [],
+        y   = [],
+        z,
+        v,
+        u   = [],
+        tmp = length - ( length % h ),
+
+        /* Cumulativa sum
+            * 
+            * @param vector Array The vector that the end result should be
+            * based upon.
+            * 
+            * @return Array
+            */
+        cumsum = function( vector )
+        {
+            var cumsum  = [];
+            cumsum[ 0 ] = vector[ 0 ];
+            for ( var i = 1; i < vector.length; i++ )
+                cumsum[ i ] = cumsum[ i-1 ] + vector[ i ];
+
+            return cumsum;
+        };
             
         for( var n = 0, i = 0; n < tmp; n += h, i++ )
             x[ i ] = n;
@@ -80,7 +82,7 @@ var Animasies =
                     / Math.pow( 2 * s, 2 )
                     ) * -1 ));
 
-        z = Math.cumsum( y );
+        z = cumsum( y );
         v = length / z[ z.length - 1 ];
 
         for( i = 0; i < z.lenth; i++ )
@@ -116,9 +118,10 @@ var Animasies =
         frequency   = frequency || 1.8;
         frequency   = Math.abs( frequency );
         
-        var t  = 0,
-            yv = [],
-            r;
+        var 
+        t  = 0,
+        yv = [],
+        r;
 
         do 
         {
@@ -147,10 +150,11 @@ var Animasies =
      */
     curtainClose : function( distance )
     {
-        var value = 0,
-            t     = 0,
-            pull  = 0,
-            ani   = [];
+        var 
+        value = 0,
+        t     = 0,
+        pull  = 0,
+        ani   = [];
 
         while( value < distance )
         {
@@ -196,13 +200,14 @@ var Animasies =
         max = max || 15;
         max = Math.abs( max );
         
-        var y    = 0,
-            v    = 0,
-            y0   = height,
-            v0   = 0,
-            t    = 0,
-            fv0,
-            data = [];
+        var 
+        y    = 0,
+        v    = 0,
+        y0   = height,
+        v0   = 0,
+        t    = 0,
+        fv0,
+        data = [];
 
         for( var i = 0; i < max; i++ )
         {
@@ -243,9 +248,10 @@ var Animasies =
      */
     fall : function( distance )
     {
-        var value = 0,
-            t     = 0,
-            ani   = [];
+        var 
+        value = 0,
+        t     = 0,
+        ani   = [];
 
         while( value < distance )
         {
@@ -278,8 +284,9 @@ var Animasies =
         speed = speed || 1;
         speed = Match.abs( speed );
 
-        var value = 0,
-            ani   = [];
+        var 
+        value = 0,
+        ani   = [];
 
         while( value < distance )
         {
@@ -293,7 +300,7 @@ var Animasies =
         return ani;
     },
     
-    /* Half of a sinus curve, returns
+    /* Half of a sinus curve
      * 
      * @param distance int The distance we wish to animate
      * 
@@ -310,10 +317,11 @@ var Animasies =
         speed  = speed || 1;
         speed /= 10;
 
-        var ani    = [],
-            former = 0,
-            ticker = 0,
-            value;
+        var 
+        ani    = [],
+        former = 0,
+        ticker = 0,
+        value;
 
         while( true )
         {
@@ -351,10 +359,11 @@ var Animasies =
         speed  = speed || 1;
         speed /= 10;
 
-        var ani    = [],
-            former = 0,
-            ticker = ( Math.PI / 2 ) * - 1,
-            value;
+        var 
+        ani    = [],
+        former = 0,
+        ticker = ( Math.PI / 2 ) * - 1,
+        value;
 
         while( true )
         {
