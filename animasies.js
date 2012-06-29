@@ -40,56 +40,47 @@ var Animasies =
     bell : function( length, position )
     {
         position = position || 0.5;
-        
-        var
-        h   = length / (( 0.053019146 * length ) + 84.09425626 ),
-        s   = length / 10,
-        j   = length * position,
-        x   = [],
-        y   = [],
+        var 
+        h  = length / ((( 180 / 3395 ) * length ) + 84.09425626 ),
+        s  = length / 10,
+        j  = length * position,
+        x  = [],
+        y  = [],
         z,
         v,
-        u   = [],
-        tmp = length - ( length % h ),
-
-        /* Cumulativa sum
-            * 
-            * @param vector Array The vector that the end result should be
-            * based upon.
-            * 
-            * @return Array
-            */
-        cumsum = function( vector )
+        u  = [],
+        tmp   = length - ( length % h ),
+        cumsum = function(vector)
         {
             var cumsum  = [];
             cumsum[ 0 ] = vector[ 0 ];
-            for ( var i = 1; i < vector.length; i++ )
-                cumsum[ i ] = cumsum[ i-1 ] + vector[ i ];
-
+            for( var i = 1, n = vector.length; i < n; i++ )
+                cumsum[ i ] = cumsum[ i - 1 ] + vector[ i ];
+              
             return cumsum;
         };
             
-        for( var n = 0, i = 0; n < tmp; n += h, i++ )
+        for(var n = 0, i = 0; n < tmp; n += h, i++)
             x[ i ] = n;
         x[ i ] = length;
-        
-        tmp = h * ( 1 / ( s * ( Math.sqrt( 2 * Math.PI ))));
-        for( i = 0; i < x.lenth; i++ )
+
+        tmp = h*(1/(s*(Math.sqrt(2*Math.PI))));
+        for( n in x )
             y.push( 
                 tmp 
                 * Math.exp(
-                    ( Math.pow( x[ i ] - j, 2 ) 
+                    ( Math.pow( x[ n ] - j, 2 ) 
                     / Math.pow( 2 * s, 2 )
                     ) * -1 ));
 
         z = cumsum( y );
         v = length / z[ z.length - 1 ];
-
-        for( i = 0; i < z.lenth; i++ )
-            u.push( Math.round( v * z[ i ] ));
         
+        for( n in z )
+            u[ n ] = Math.round( v * z[ n ]);
+
         if( u.length > 0 )
-            u[ u.length - 1 ] = length;
+            u[ u.length-1 ] = length;
 
         return u;
     },
