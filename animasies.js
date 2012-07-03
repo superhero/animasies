@@ -273,7 +273,7 @@ var Animasies =
     constantMotion : function( distance, speed )
     {
         speed = speed || 1;
-        speed = Match.abs( speed );
+        speed = Math.abs( speed );
 
         var 
         value = 0,
