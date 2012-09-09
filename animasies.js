@@ -40,16 +40,20 @@ var Animasies =
     bell : function( length, position )
     {
         position = position || 0.5;
+        
+        var negative = length < 0;
+        length = Math.abs( length );
+        
         var 
-        h  = length / ((( 180 / 3395 ) * length ) + 84.09425626 ),
-        s  = length / 10,
-        j  = length * position,
-        x  = [],
-        y  = [],
+        h = length / ((( 180 / 3395 ) * length ) + 84.09425626 ),
+        s = length / 10,
+        j = length * position,
+        x = [],
+        y = [],
         z,
         v,
-        u  = [],
-        tmp   = length - ( length % h ),
+        u = [],
+        tmp = length - ( length % h ),
         cumsum = function(vector)
         {
             var cumsum  = [];
@@ -77,10 +81,10 @@ var Animasies =
         v = length / z[ z.length - 1 ];
         
         for( n in z )
-            u[ n ] = Math.round( v * z[ n ]);
+            u[ n ] = Math.round( v * z[ n ]) * ( negative ? -1 : 1 );
 
         if( u.length > 0 )
-            u[ u.length-1 ] = length;
+            u[ u.length-1 ] = length * ( negative ? -1 : 1 );
 
         return u;
     },
@@ -110,9 +114,12 @@ var Animasies =
         frequency   = Math.abs( frequency );
         
         var 
-        t  = 0,
-        yv = [],
+        negative = height < 0,
+        t        = 0,
+        yv       = [],
         r;
+        
+        height = Math.abs( height );
 
         do 
         {
@@ -123,7 +130,7 @@ var Animasies =
                     attenuation * t )
                * Math.cos(( frequency * t ) + Math.PI );
                 
-            yv.push( Math.round( r ));
+            yv.push( Math.round( r ) * ( negative ? -1 : 1 ));
         }
         while( Math.abs( r ) >= 0.005 );
 
@@ -142,21 +149,24 @@ var Animasies =
     curtainClose : function( distance )
     {
         var 
-        value = 0,
-        t     = 0,
-        pull  = 0,
-        ani   = [];
+        negative = distance < 0,
+        value    = 0,
+        t        = 0,
+        pull     = 0,
+        ani      = [];
+        
+        distance = Math.abs( distance );
 
         while( value < distance )
         {
             t    += 0.8;
             pull += 10;
             value = t * t - pull;
-            ani.push( Math.round( value ));
+            ani.push( Math.round( value ) * ( negative ? -1 : 1 ));
         }
         
         if( ani.length > 0 )
-            ani[ ani.length - 1 ] = distance;
+            ani[ ani.length - 1 ] = distance * ( negative ? -1 : 1 );
         
         return ani;
     },
@@ -191,6 +201,9 @@ var Animasies =
         max = max || 15;
         max = Math.abs( max );
         
+        var negative = height < 0;
+        height = Math.abs( height );
+        
         var 
         y    = 0,
         v    = 0,
@@ -209,7 +222,7 @@ var Animasies =
                 y  = Math.round( y );
                 v  = v0 - ( gravity * t );
                 t += 0.1;
-                data.push( Math.round( height - ( y < 0 ? 0 : y )));
+                data.push( Math.round( height - ( y < 0 ? 0 : y )) * ( negative ? -1 : 1 ) );
             }
             
             // Reset before next bounce
@@ -223,7 +236,7 @@ var Animasies =
         }
         
         if( data.length > 0 )
-            data[ data.length - 1 ] = height;
+            data[ data.length - 1 ] = height * ( negative ? -1 : 1 );
 
         return data;
     },
@@ -240,20 +253,23 @@ var Animasies =
     fall : function( distance )
     {
         var 
-        value = 0,
-        t     = 0,
-        ani   = [];
+        negative = distance < 0,
+        value    = 0,
+        t        = 0,
+        ani      = [];
+        
+        distance = Math.abs( distance );
 
         while( value < distance )
         {
             t    += 0.8;
             value = t * t;
             
-            ani.push( Math.round( value ));
+            ani.push( Math.round( value ) * ( negative ? -1 : 1 ));
         }
         
         if( ani.length > 0 )
-            ani[ ani.length - 1 ] = distance;
+            ani[ ani.length - 1 ] = distance * ( negative ? -1 : 1 );
         
         return ani;
     },
@@ -274,19 +290,22 @@ var Animasies =
     {
         speed = speed || 1;
         speed = Math.abs( speed );
-
+        
         var 
-        value = 0,
-        ani   = [];
+        negative = distance < 0,
+        value    = 0,
+        ani      = [];
+        
+        distance = Math.abs( distance );
 
         while( value < distance )
         {
             value += speed;
-            ani.push( Math.round( value ));
+            ani.push( Math.round( value ) * ( negative ? -1 : 1 ) );
         }
         
         if( ani.length > 0 )
-            ani[ ani.length - 1 ] = distance;
+            ani[ ani.length - 1 ] = distance * ( negative ? -1 : 1 );
         
         return ani;
     },
@@ -309,10 +328,13 @@ var Animasies =
         speed /= 10;
 
         var 
-        ani    = [],
-        former = 0,
-        ticker = 0,
+        negative = distance < 0,
+        ani      = [],
+        former   = 0,
+        ticker   = 0,
         value;
+        
+        distance = Math.abs( distance );
 
         while( true )
         {
@@ -324,11 +346,11 @@ var Animasies =
 
             former = value;
 
-            ani.push( Math.round( value * distance ));
+            ani.push( Math.round( value * distance ) * ( negative ? -1 : 1 ) );
         }
 
         if( ani.length > 0 )
-            ani[ ani.length - 1 ] = distance;
+            ani[ ani.length - 1 ] = distance * ( negative ? -1 : 1 );
 
         return ani;
     },
@@ -351,10 +373,13 @@ var Animasies =
         speed /= 10;
 
         var 
-        ani    = [],
-        former = 0,
-        ticker = ( Math.PI / 2 ) * - 1,
+        negative = distance < 0,
+        ani      = [],
+        former   = 0,
+        ticker   = ( Math.PI / 2 ) * - 1,
         value;
+        
+        distance = Math.abs( distance );
 
         while( true )
         {
@@ -366,11 +391,11 @@ var Animasies =
 
             former = value;
 
-            ani.push( Math.round( value * distance ));
+            ani.push( Math.round( value * distance ) * ( negative ? -1 : 1 ) );
         }
 
         if( ani.length > 0 )
-            ani[ ani.length - 1 ] = distance;
+            ani[ ani.length - 1 ] = distance * ( negative ? -1 : 1 );
 
         return ani;
     }
